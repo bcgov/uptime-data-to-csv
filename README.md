@@ -31,15 +31,12 @@ Then run:
 
 ```sh
 # Get check data from today's date, going back in time by the default amount
-python3 script.py -t $TOK -pk 1389736 -d $(date +"%Y-%m-%d")
+python3 script.py -t $TOK -pk 1389736
 ```
 
 ### Other Samples
 
 ```sh
-# Get check data for the check with pk 1389736
-python3 script.py -t $TOK -pk 1389736
-
 # Get check data for check starting on 2023-07-23 (note: this check may fail if running in the future.)
 python3 script.py -t $TOK -pk 1389736 -d "2023-07-23"
 
