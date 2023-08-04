@@ -1,0 +1,6 @@
+.env
+questions.md
+samples/
+.DS_STORE
+data.json
+*.csv
