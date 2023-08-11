@@ -122,7 +122,7 @@ def output_alerts_csv(stats):
         writer = csv.writer(file)
 
         writer.writerow(["alertPK", "checkPK", "checkName", "createdAt",
-                        "endedAt" "stateIsUp", "ignored", "durationSecs", "output"])
+                        "endedAt", "stateIsUp", "ignored", "durationSecs", "output"])
 
         for stat in stats:
             for entry in stat:
