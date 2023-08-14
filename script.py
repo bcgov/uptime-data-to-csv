@@ -1,5 +1,5 @@
 import argparse
-import datetime as dt
+from dateutil import parser
 from datetime import timedelta, datetime
 import csv
 import re
@@ -19,7 +19,7 @@ DEFAULT_DAYS = 30
 
 
 def parse_date(d):
-    return dt.datetime.strptime(d, '%Y-%m-%d').date()
+    return parser.parse(d)
 
 
 def parse_args():
@@ -30,7 +30,7 @@ def parse_args():
     parser.add_argument('-pk', '--check_pk', required=True,
                         help='Primary key of the checks you would like to pull data from. If supplying multiple keys, separate with a comma. Eg: 147,789')
     parser.add_argument('-d', '--date', type=parse_date,
-                        help='(optional) Date to end saving statistics from, YYYY-MM-DD. If not supplied, will use current date.')
+                        help='(optional) Date to end saving statistics from, in ISO 8601 format. If not supplied, will use current date.')
     parser.add_argument('-n', '--num_days',
                         help='(optional) Number of days to fetch data from "--date". Default is %s.' % DEFAULT_DAYS)
     parser.add_argument('-o', '--output',
@@ -79,7 +79,7 @@ def load_all_checks_stats(from_date, check_pk, days):
         print("Fetching data for check with primary key: %s ..." % cpk)
         current_date = from_date - \
             timedelta(
-                days=days)  # CHANGE TO 30 DAYS, SET TO 3 FOR QUICKER TESTING
+                days=days)
         termination_date = from_date + timedelta(days=1)
         r = make_api_call("Get check name", 'get', 'checks/%s' %
                           cpk, slow_down=slow_down)
@@ -89,8 +89,8 @@ def load_all_checks_stats(from_date, check_pk, days):
             r = make_api_call('Reading check stats',
                               'get', 'checks/bulk/stats/',
                               params={'pk': cpk,
-                                      'start_date': str(current_date),
-                                      'end_date': str(current_date),
+                                      'start_date': current_date.strftime("%Y-%m-%d"),
+                                      'end_date': current_date.strftime("%Y-%m-%d"),
                                       'include_alerts': '1'}, slow_down=slow_down)
             stats.append(r['checks'])
             current_date = current_date + timedelta(days=1)
