@@ -1,3 +1,11 @@
+"""
+This script is based on code from the following repository:
+https://github.com/uptime-com/rest-api-examples/blob/master/python/download_check_stats.py
+
+Copyright (c) 2019 Uptime.com
+https://github.com/uptime-com/rest-api-examples/blob/master/LICENSE
+"""
+
 import argparse
 from dateutil import parser
 from datetime import timedelta, datetime
